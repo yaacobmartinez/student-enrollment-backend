@@ -1,0 +1,14 @@
+{
+  "name": "student-enrollment-backend",
+  "version": "0.0.1",
+  "description": "Student Enrollment Backend built on ExpressJS and MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yaacob Martinez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
