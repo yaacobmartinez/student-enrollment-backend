@@ -111,6 +111,7 @@ exports.loginUser = async function (req, res) {
 	if (!user)
 		return res.status(500).json({
 			success: false,
+			field: "email",
 			message: `We cannot find a user with that email`,
 		});
 
@@ -121,7 +122,11 @@ exports.loginUser = async function (req, res) {
 	if (!isCorrectPassword)
 		return res
 			.status(500)
-			.json({ success: false, message: `Your password is invalid.` });
+			.json({
+				success: false,
+				field: "password",
+				message: `Your password is invalid.`,
+			});
 
 	const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
 		expiresIn: 86400,
