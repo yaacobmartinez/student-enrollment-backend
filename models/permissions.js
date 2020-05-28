@@ -8,7 +8,7 @@ const Permission = new mongoose.Schema({
 	action: {
 		type: String,
 		required: true,
-		enum: ["count", "find", "create", "delete", "find", "findOne", "update"],
+		enum: ["count", "find", "create", "delete", "findOne", "update"],
 		default: "count",
 	},
 	enabled: {

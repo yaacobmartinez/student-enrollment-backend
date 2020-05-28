@@ -5,6 +5,7 @@ const User = require("../models/users");
 const Activity = require("../models/activityLogs");
 
 exports.getAll = async function (req, res) {
+	// console.log(req._parsedUrl.query);
 	try {
 		const users = await User.publicUser.find();
 		setLog(res._id, "Query Users", req.ip);
@@ -120,13 +121,11 @@ exports.loginUser = async function (req, res) {
 		user.password
 	);
 	if (!isCorrectPassword)
-		return res
-			.status(500)
-			.json({
-				success: false,
-				field: "password",
-				message: `Your password is invalid.`,
-			});
+		return res.status(500).json({
+			success: false,
+			field: "password",
+			message: `Your password is invalid.`,
+		});
 
 	const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
 		expiresIn: 86400,
