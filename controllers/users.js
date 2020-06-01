@@ -20,9 +20,9 @@ exports.register = async function (req, res) {
 		email: req.body.email,
 	});
 	if (userExists) {
-		return res.status(500).json({
+		return res.json({
 			success: false,
-			message: `Email ${req.body.email} already exists`,
+			message: `Email already exists`,
 		});
 	}
 	const user = new User.authUser({
@@ -41,7 +41,7 @@ exports.register = async function (req, res) {
 	}
 };
 exports.getUser = async function (req, res) {
-	setLog(res._id, `Searched for User ${res.user.username}`);
+	setLog(res._id, `Searched for User ${res.user.email}`);
 	res.json(res.user);
 };
 
@@ -50,10 +50,10 @@ exports.deleteUser = async function (req, res) {
 		await res.user.remove();
 		setLog(
 			res._id,
-			`Deleted User with Username ${res.user.username} and ID ${res.user._id}`,
+			`Deleted User with Username ${res.user.email} and ID ${res.user._id}`,
 			req.ip
 		);
-		res.json({ success: true, message: `User ${res.user.username} Removed` });
+		res.json({ success: true, message: `User ${res.user.email} Removed` });
 	} catch (error) {
 		res.status(500).json({ success: false, message: error.message });
 	}
@@ -126,7 +126,20 @@ exports.loginUser = async function (req, res) {
 			field: "password",
 			message: `Your password is invalid.`,
 		});
-
+	if (!user.confirmed) {
+		return res.status(500).json({
+			success: false,
+			field: "email",
+			message: "Please confirm your email address first",
+		});
+	}
+	if (user.blocked) {
+		return res.status(500).json({
+			success: false,
+			field: "email",
+			message: "Your access has been restricted by your administrator",
+		});
+	}
 	const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
 		expiresIn: 86400,
 	});

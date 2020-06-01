@@ -13,6 +13,7 @@ exports.add = async function (req, res) {
 	const permissionExists = await Permission.findOne({
 		controller: req.body.controller,
 		action: req.body.action,
+		role: req.body.role,
 	});
 	if (permissionExists) {
 		res.status(500).json({
@@ -49,16 +50,16 @@ exports.getPermission = async function (req, res) {
 
 exports.updatePermission = async function (req, res) {
 	if (req.body.controller != null) {
-		res.role.controller = req.body.controller;
+		res.permission.controller = req.body.controller;
 	}
 	if (req.body.action != null) {
-		res.role.action = req.body.action;
+		res.permission.action = req.body.action;
 	}
 	if (req.body.enabled != null) {
-		res.role.enabled = req.body.enabled;
+		res.permission.enabled = req.body.enabled;
 	}
 	if (req.body.role != null) {
-		res.role.role = req.body.role;
+		res.permission.role = req.body.role;
 	}
 
 	try {
