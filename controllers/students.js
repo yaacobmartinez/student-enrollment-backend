@@ -2,7 +2,30 @@ const Student = require("../models/students");
 
 exports.getAll = async (req, res) => {
 	try {
-		const students = await Student.find();
+		const students = await Student.find({
+			verified: true,
+			active: true,
+		});
+		res.json(students);
+	} catch (error) {
+		res.status(500).json({ success: false, message: error.message });
+	}
+};
+exports.getUnverified = async (req, res) => {
+	try {
+		const students = await Student.find({
+			verified: false,
+		});
+		res.json(students);
+	} catch (error) {
+		res.status(500).json({ success: false, message: error.message });
+	}
+};
+exports.getInactive = async (req, res) => {
+	try {
+		const students = await Student.find({
+			active: false,
+		});
 		res.json(students);
 	} catch (error) {
 		res.status(500).json({ success: false, message: error.message });
@@ -62,6 +85,7 @@ exports.add = async (req, res) => {
 		contact: req.body.contact,
 		student_type: req.body.student_type,
 		gradeLevel: req.body.gradeLevel,
+		section: req.body.section,
 		course: req.body.course,
 		track: req.body.track,
 		strand: req.body.strand,
@@ -148,6 +172,9 @@ exports.updateStudent = async (req, res) => {
 	}
 	if (req.body.gradeLevel != null) {
 		res.student.gradeLevel = req.body.gradeLevel;
+	}
+	if (req.body.section != null) {
+		res.student.section = req.body.section;
 	}
 	if (req.body.course != null) {
 		res.student.course = req.body.course;

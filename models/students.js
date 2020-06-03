@@ -7,6 +7,7 @@ const Student = new mongoose.Schema({
 	LRN: {
 		type: Number,
 	},
+
 	last_name: {
 		type: String,
 		required: [true, `Last Name is required.`],
@@ -31,6 +32,7 @@ const Student = new mongoose.Schema({
 		enum: ["male", "female"],
 		required: true,
 	},
+
 	houseNumberAndStreet: {
 		type: String,
 	},
@@ -40,6 +42,7 @@ const Student = new mongoose.Schema({
 	cityMunicipalityProvinceCountry: {
 		type: String,
 	},
+
 	father_first_name: {
 		type: String,
 	},
@@ -70,11 +73,15 @@ const Student = new mongoose.Schema({
 	contact: {
 		type: String,
 	},
+
 	student_type: {
 		type: String,
 	},
 	gradeLevel: {
 		type: Number,
+	},
+	section: {
+		type: String,
 	},
 	course: {
 		type: String,

@@ -10,6 +10,16 @@ router.get(
 	[verifyJWT, allowAction("students", "find")],
 	StudentController.getAll
 );
+router.get(
+	"/unverified",
+	[verifyJWT, allowAction("students", "find")],
+	StudentController.getUnverified
+);
+router.get(
+	"/inactive",
+	[verifyJWT, allowAction("students", "find")],
+	StudentController.getInactive
+);
 router.post(
 	"/",
 	// [verifyJWT, allowAction("students", "create")],

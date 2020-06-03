@@ -37,9 +37,14 @@ exports.allowAction = function (controller, action) {
 			controller,
 			role: role._id,
 			action,
+			enabled: true,
 		});
 		if (permission === null) {
-			res.json({ success: false, message: "Permission Denied" });
+			res.json({
+				success: false,
+				field: "access",
+				message: "Permission Denied",
+			});
 		} else {
 			next();
 		}

@@ -11,7 +11,11 @@ router.get(
 	UserController.getAll
 );
 // router.get('/', UserController.getAll)
-router.post("/register", UserController.register);
+router.post(
+	"/register",
+	[verifyJWT, allowAction("users", "create")],
+	UserController.register
+);
 router.get(
 	"/:id",
 	[verifyJWT, allowAction("users", "findOne"), UserController.getUserById],
